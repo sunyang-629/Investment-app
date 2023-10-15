@@ -52,6 +52,39 @@ namespace InvestmentAppProd.Services
                 throw new NotImplementedException();
             }
         }
+
+        public Investment UpdateInvestment(IInvestmentDTO investment)
+        {
+            if (investment.StartDate > DateTime.Now)
+                throw new Exception("Investment Start Date cannot be in the future.");
+
+            try
+            {
+                var updatedInvestment = new Investment(investment);
+                _context.ChangeTracker.Clear();
+                _context.UpdateInvestment(updatedInvestment);
+                _context.SaveChanges();
+                return updatedInvestment;
+            }
+            catch
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Investment GetInvestment(string investmentName)
+        {
+            try
+            {
+                _context.ChangeTracker.Clear();
+                var investment = _context.FindInvestmentByName(investmentName);
+                if(investment == null) throw new Exception($"Investment with name {investment.Name} not found.");
+                return investment;
+            } catch
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
 

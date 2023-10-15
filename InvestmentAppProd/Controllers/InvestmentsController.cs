@@ -30,11 +30,8 @@ namespace InvestmentAppProd.Controllers
         {
             try
             {
-                var investment = _context.Investments.Find(investmentName);
-                if (investment == null)
-                    return NotFound();
-
-                return Ok(investment);
+                var result = _service.GetInvestment(investmentName);
+                return Ok(result);
             }
             catch (Exception e)
             {
@@ -62,26 +59,20 @@ namespace InvestmentAppProd.Controllers
         }
 
         [HttpPut("{investmentName}")]
-        public ActionResult UpdateInvestment([FromRoute] string investmentName, [FromBody] Investment investment)
+        public ActionResult UpdateInvestment([FromRoute] string investmentName, [FromBody] IInvestmentDTO investment)
         {
             try
             {
                 if (investmentName != investment.Name)
                     return BadRequest("Name does not match the Investment you are trying to update.");
 
-                if (investment.StartDate > DateTime.Now)
-                    return BadRequest("Investment Start Date cannot be in the future.");
+                var result = _service.UpdateInvestment(investment);
 
-                investment.CalculateValue();
-                _context.ChangeTracker.Clear();
-                _context.Entry(investment).State = EntityState.Modified;
-                _context.SaveChanges();
-
-                return NoContent();
+                return Ok(result);
             }
             catch (Exception e)
             {
-                return NotFound(e.ToString());
+                return BadRequest(e.ToString());
             }
         }
 

@@ -33,6 +33,8 @@ namespace InvestmentAppProd.Data
             var investmentToUpdate = FindInvestmentByName(investment.Name);
             if(investmentToUpdate != null)
             {
+                //** assuming name as the unique identify which is not able to update here
+                investmentToUpdate.InterestType = investment.InterestType;
                 investmentToUpdate.InterestRate = investment.InterestRate;
                 investmentToUpdate.StartDate = investment.StartDate;
                 investmentToUpdate.PrincipalAmount = investment.PrincipalAmount;
