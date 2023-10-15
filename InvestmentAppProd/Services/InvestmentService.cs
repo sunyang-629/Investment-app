@@ -38,6 +38,20 @@ namespace InvestmentAppProd.Services
                 throw new NotImplementedException();
             }
         }
+
+        public void RemoveInvestment(string investmentName)
+        {
+            try
+            {
+                _context.ChangeTracker.Clear();
+                _context.DeleteInvestmentByName(investmentName);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
 

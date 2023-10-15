@@ -8,5 +8,6 @@ namespace InvestmentAppProd.Interfaces
 	public interface IInvestmentService
 	{
 		public Investment AddNewInvestment(IInvestmentDTO investment);
+		public void RemoveInvestment(string investmentName);
 	}
 }

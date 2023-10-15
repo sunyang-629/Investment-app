@@ -90,15 +90,7 @@ namespace InvestmentAppProd.Controllers
         {
             try
             {
-                var investment = _context.Investments.Find(investmentName);
-                if (investment == null)
-                {
-                    return NotFound();
-                }
-                _context.ChangeTracker.Clear();
-                _context.Investments.Remove(investment);
-                _context.SaveChanges();
-
+                _service.RemoveInvestment(investmentName);
                 return NoContent();
             }
             catch (Exception e)
