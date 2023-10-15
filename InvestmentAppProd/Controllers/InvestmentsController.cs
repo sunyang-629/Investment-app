@@ -10,23 +10,23 @@ using InvestmentAppProd.Data;
 
 namespace InvestmentAppProd.Controllers
 {
-    [Route("api/v1/investments")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class InvestmentController : Controller
+    public class InvestmentsController : Controller
     {
         private readonly InvestmentDBContext _context;
 
-        public InvestmentController(InvestmentDBContext context)
+        public InvestmentsController(InvestmentDBContext context)
         {
             _context = context;
         }
 
-        [HttpGet("{name}")]
-        public ActionResult<Investment> CalculateInvestment([FromRoute] string name)
+        [HttpGet("{investmentName}")]
+        public ActionResult<Investment> CalculateInvestment([FromRoute] string investmentName)
         {
             try
             {
-                var investment = _context.Investments.Find(name);
+                var investment = _context.Investments.Find(investmentName);
                 if (investment == null)
                     return NotFound();
 
@@ -64,12 +64,12 @@ namespace InvestmentAppProd.Controllers
             }
         }
 
-        [HttpPut("name")]
-        public ActionResult UpdateInvestment([FromQuery] string name, [FromBody] Investment investment)
+        [HttpPut("{investmentName}")]
+        public ActionResult UpdateInvestment([FromRoute] string investmentName, [FromBody] Investment investment)
         {
             try
             {
-                if (name != investment.Name)
+                if (investmentName != investment.Name)
                     return BadRequest("Name does not match the Investment you are trying to update.");
 
                 if (investment.StartDate > DateTime.Now)
@@ -88,12 +88,12 @@ namespace InvestmentAppProd.Controllers
             }
         }
 
-        [HttpDelete("name")]
-        public ActionResult DeleteInvestment([FromQuery] string name)
+        [HttpDelete("{investmentName}")]
+        public ActionResult DeleteInvestment([FromRoute] string investmentName)
         {
             try
             {
-                var investment = _context.Investments.Find(name);
+                var investment = _context.Investments.Find(investmentName);
                 if (investment == null)
                 {
                     return NotFound();
