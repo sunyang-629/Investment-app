@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using InvestmentAppProd.Data;
-using InvestmentAppProd.interfaces;
+using InvestmentAppProd.Interfaces;
 using InvestmentAppProd.Services;
 
 namespace InvestmentAppProd

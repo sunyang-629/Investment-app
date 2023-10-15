@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using InvestmentAppProd.Data;
-using InvestmentAppProd.interfaces;
+using InvestmentAppProd.Interfaces;
 using InvestmentAppProd.Models;
 using InvestmentAppProd.Models.DTO;
 
@@ -18,15 +18,18 @@ namespace InvestmentAppProd.Services
 
         public Investment AddNewInvestment(IInvestmentDTO investment)
         {
+
+            if (investment.StartDate > DateTime.Now)
+                throw new Exception("Investment Start Date cannot be in the future.");
+
+            var existedInvestment = _context.FindInvestmentByName(investment.Name);
+            if (existedInvestment != null)
+                throw new Exception($"Investment with name {investment.Name} is unavaliable.");
+
             try
             {
-                //if (investment.StartDate > DateTime.Now)
-                //    return new BadRequest("Investment Start Date cannot be in the future.");
-
                 var newInvestment = new Investment(investment);
-                newInvestment.CalculateValue();
                 _context.ChangeTracker.Clear();
-                //_context.Investments.Add(newInvestment);
                 _context.AddInvestment(newInvestment);
                 _context.SaveChanges();
                 return newInvestment;

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using InvestmentAppProd.Models.DTO;
+using System.Runtime.Serialization;
 
 namespace InvestmentAppProd.Models
 {
@@ -16,7 +17,7 @@ namespace InvestmentAppProd.Models
 
 		public DateTime StartDate { get; set; }
 
-		public string InterestType { get; set; }
+		public InvestmentInterestTypeEnum InterestType { get; set; }
 
 		public double InterestRate { get; set; }
 
@@ -28,13 +29,19 @@ namespace InvestmentAppProd.Models
 		{
 		}
 
-		public Investment(string name, DateTime startDate, string interestType, double rate, double principal)
+		public Investment(string name, DateTime startDate, InvestmentInterestTypeEnum interestType, double rate, double principal)
 		{
 			Name = name;
 			StartDate = startDate;
 			InterestType = interestType;
 			InterestRate = rate;
 			PrincipalAmount = principal;
+		}
+
+		public enum InvestmentInterestTypeEnum
+		{
+            Simple,
+            Compound
 		}
 
 		public Investment(IInvestmentDTO investment)
@@ -71,7 +78,7 @@ namespace InvestmentAppProd.Models
 			n = 12;
 			compoundInterestFinalAmount = this.PrincipalAmount * Math.Pow((1 + (r / n)), (n * t));
 
-			if (this.InterestType == "Simple")
+			if (this.InterestType == InvestmentInterestTypeEnum.Simple)
 				this.CurrentValue = Math.Round(simpleInterestFinalAmount, 2);
 			else
 				this.CurrentValue = Math.Round(compoundInterestFinalAmount, 2);

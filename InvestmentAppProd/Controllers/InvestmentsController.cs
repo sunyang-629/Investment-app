@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InvestmentAppProd.Models;
 using InvestmentAppProd.Data;
 using InvestmentAppProd.Models.DTO;
-using InvestmentAppProd.interfaces;
+using InvestmentAppProd.Interfaces;
 
 namespace InvestmentAppProd.Controllers
 {
@@ -48,16 +48,7 @@ namespace InvestmentAppProd.Controllers
         {
             try
             {
-                //if (investment.StartDate > DateTime.Now)
-                //    return BadRequest("Investment Start Date cannot be in the future.");
-
-                //var newInvestment = new Investment(investment);
-                //newInvestment.CalculateValue();
-                //_context.ChangeTracker.Clear();
-                //_context.Investments.Add(newInvestment);
-                //_context.SaveChanges();
                 var result = _service.AddNewInvestment(investment);
-
                 return CreatedAtAction("AddInvestment", investment.Name, investment);
             }
             catch (DbUpdateException dbE)

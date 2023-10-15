@@ -25,7 +25,7 @@ namespace InvestmentAppProd.Data
 
         public Investment FindInvestmentByName(string investmentName)
         {
-            return (Investment)Investments.Where(i => i.Name == investmentName);
+            return Investments.Where(i => i.Name == investmentName).FirstOrDefault();
         }
 
         public void UpdateInvestment(Investment investment)

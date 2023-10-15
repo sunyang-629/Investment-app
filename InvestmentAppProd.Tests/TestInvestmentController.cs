@@ -13,13 +13,13 @@ namespace InvestmentAppProd.Tests
     public class TestInvestmentController : IClassFixture<CustomWebApplicationFactory<Program>>, IDisposable
     {
         private readonly IServiceScope _scope;
-        private readonly InvestmentController _controller;
+        private readonly InvestmentsController _controller;
 
 
         public TestInvestmentController(CustomWebApplicationFactory<Program> factory)
         {
             _scope = factory.Services.CreateScope();
-            _controller = _scope.ServiceProvider.GetRequiredService<InvestmentController>();   
+            _controller = _scope.ServiceProvider.GetRequiredService<InvestmentsController>();   
             SeedDatabase(_scope);
         }
 

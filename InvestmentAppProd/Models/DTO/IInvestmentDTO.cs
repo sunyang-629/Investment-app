@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static InvestmentAppProd.Models.Investment;
 
 namespace InvestmentAppProd.Models.DTO
 {
@@ -22,7 +23,8 @@ namespace InvestmentAppProd.Models.DTO
         public DateTime StartDate { get; set; }
 
         [Required]
-        public string InterestType { get; set; }
+        [EnumDataType(typeof(InvestmentInterestTypeEnum))]
+        public InvestmentInterestTypeEnum InterestType { get; set; }
 
         [Required]
         public double InterestRate { get; set; }

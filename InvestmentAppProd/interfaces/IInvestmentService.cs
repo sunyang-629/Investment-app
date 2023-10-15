@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using InvestmentAppProd.Models;
 using InvestmentAppProd.Models.DTO;
 
-namespace InvestmentAppProd.interfaces
+namespace InvestmentAppProd.Interfaces
 {
 	public interface IInvestmentService
 	{

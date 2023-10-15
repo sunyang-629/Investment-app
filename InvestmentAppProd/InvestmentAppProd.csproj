@@ -13,11 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="interfaces\" />
     <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="interfaces\" />
     <Folder Include="Services\" />
   </ItemGroup>
 </Project>
