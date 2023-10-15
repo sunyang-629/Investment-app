@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using InvestmentAppProd.Data;
+using InvestmentAppProd.interfaces;
+using InvestmentAppProd.Services;
 
 namespace InvestmentAppProd
 {
@@ -30,6 +32,8 @@ namespace InvestmentAppProd
         {
             //Using InMemoryDatabase, Database name set as "Investments".
             services.AddDbContext<InvestmentDBContext>(options => options.UseInMemoryDatabase("Investments"));
+
+            services.AddTransient<IInvestmentService, InvestmentService>();
 
             services.AddControllers().AddControllersAsServices();
             services.AddSwaggerGen(c =>

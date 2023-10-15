@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using InvestmentAppProd.Models.DTO;
 
 namespace InvestmentAppProd.Models
 {
@@ -34,6 +35,15 @@ namespace InvestmentAppProd.Models
 			InterestType = interestType;
 			InterestRate = rate;
 			PrincipalAmount = principal;
+		}
+
+		public Investment(IInvestmentDTO investment)
+		{
+			Name = investment.Name;
+			StartDate = investment.StartDate;
+			InterestType = investment.InterestType;
+			InterestRate = investment.InterestRate;
+			PrincipalAmount = investment.PrincipalAmount;
 		}
 
 		public void CalculateValue()

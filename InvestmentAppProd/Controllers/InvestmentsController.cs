@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using InvestmentAppProd.Models;
 using InvestmentAppProd.Data;
+using InvestmentAppProd.Models.DTO;
+using InvestmentAppProd.interfaces;
 
 namespace InvestmentAppProd.Controllers
 {
@@ -15,10 +17,12 @@ namespace InvestmentAppProd.Controllers
     public class InvestmentsController : Controller
     {
         private readonly InvestmentDBContext _context;
+        private readonly IInvestmentService _service;
 
-        public InvestmentsController(InvestmentDBContext context)
+        public InvestmentsController(InvestmentDBContext context, IInvestmentService service)
         {
             _context = context;
+            _service = service;
         }
 
         [HttpGet("{investmentName}")]
@@ -40,17 +44,19 @@ namespace InvestmentAppProd.Controllers
 
 
         [HttpPost]
-        public ActionResult<Investment> AddInvestment([FromBody] Investment investment)
+        public ActionResult<Investment> AddInvestment([FromBody] IInvestmentDTO investment)
         {
             try
             {
-                if (investment.StartDate > DateTime.Now)
-                    return BadRequest("Investment Start Date cannot be in the future.");
+                //if (investment.StartDate > DateTime.Now)
+                //    return BadRequest("Investment Start Date cannot be in the future.");
 
-                investment.CalculateValue();
-                _context.ChangeTracker.Clear();
-                _context.Investments.Add(investment);
-                _context.SaveChanges();
+                //var newInvestment = new Investment(investment);
+                //newInvestment.CalculateValue();
+                //_context.ChangeTracker.Clear();
+                //_context.Investments.Add(newInvestment);
+                //_context.SaveChanges();
+                var result = _service.AddNewInvestment(investment);
 
                 return CreatedAtAction("AddInvestment", investment.Name, investment);
             }
