@@ -26,7 +26,8 @@ namespace InvestmentAppProd.Services
                 var newInvestment = new Investment(investment);
                 newInvestment.CalculateValue();
                 _context.ChangeTracker.Clear();
-                _context.Investments.Add(newInvestment);
+                //_context.Investments.Add(newInvestment);
+                _context.AddInvestment(newInvestment);
                 _context.SaveChanges();
                 return newInvestment;
             } catch

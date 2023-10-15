@@ -13,7 +13,43 @@ namespace InvestmentAppProd.Data
 
         public InvestmentDBContext(DbContextOptions<InvestmentDBContext> options) : base(options)
         {
+
         }
+
+
+        #region investment
+        public void AddInvestment(Investment investment)
+        {
+            Investments.Add(investment);
+        }
+
+        public Investment FindInvestmentByName(string investmentName)
+        {
+            return (Investment)Investments.Where(i => i.Name == investmentName);
+        }
+
+        public void UpdateInvestment(Investment investment)
+        {
+            var investmentToUpdate = FindInvestmentByName(investment.Name);
+            if(investmentToUpdate != null)
+            {
+                investmentToUpdate.InterestRate = investment.InterestRate;
+                investmentToUpdate.StartDate = investment.StartDate;
+                investmentToUpdate.PrincipalAmount = investment.PrincipalAmount;
+
+                Entry(investmentToUpdate).State = EntityState.Modified;
+            }
+        }
+
+        public void DeleteInvestmentByName(string investmentName)
+        {
+            var investmentToDelete = FindInvestmentByName(investmentName);
+            if (investmentToDelete != null)
+            {
+                Investments.Remove(investmentToDelete);
+            }
+        }
+        #endregion investement
 
     }
 }
