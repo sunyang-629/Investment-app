@@ -16,12 +16,10 @@ namespace InvestmentAppProd.Controllers
     [ApiController]
     public class InvestmentsController : Controller
     {
-        private readonly InvestmentDBContext _context;
         private readonly IInvestmentService _service;
 
-        public InvestmentsController(InvestmentDBContext context, IInvestmentService service)
+        public InvestmentsController(IInvestmentService service)
         {
-            _context = context;
             _service = service;
         }
 

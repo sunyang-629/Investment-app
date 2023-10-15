@@ -31,7 +31,7 @@ namespace InvestmentAppProd
         public void ConfigureServices(IServiceCollection services)
         {
             //Using InMemoryDatabase, Database name set as "Investments".
-            services.AddDbContext<InvestmentDBContext>(options => options.UseInMemoryDatabase("Investments"));
+            services.AddDbContext<DBContext>(options => options.UseInMemoryDatabase("Investments"));
 
             services.AddTransient<IInvestmentService, InvestmentService>();
 

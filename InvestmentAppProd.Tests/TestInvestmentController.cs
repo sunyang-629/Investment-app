@@ -61,14 +61,14 @@ namespace InvestmentAppProd.Tests
                     PrincipalAmount = 20000
                 });
 
-            var context = scope.ServiceProvider.GetRequiredService<InvestmentDBContext>();
+            var context = scope.ServiceProvider.GetRequiredService<DBContext>();
             context.Investments.AddRange(newInvestments);
             context.SaveChanges();
         }
 
         private void EmptyDatabase(IServiceScope scope)
         {
-            var context = scope.ServiceProvider.GetRequiredService<InvestmentDBContext>();
+            var context = scope.ServiceProvider.GetRequiredService<DBContext>();
             context.Investments.RemoveRange(context.Investments.ToList());
             context.SaveChanges();
             

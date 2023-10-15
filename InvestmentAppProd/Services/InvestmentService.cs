@@ -9,9 +9,9 @@ namespace InvestmentAppProd.Services
 {
     public class InvestmentService : IInvestmentService
 	{
-        private readonly InvestmentDBContext _context;
+        private readonly DBContext _context;
 
-        public InvestmentService(InvestmentDBContext context)
+        public InvestmentService(DBContext context)
 		{
             _context = context;
 		}
@@ -79,6 +79,7 @@ namespace InvestmentAppProd.Services
                 _context.ChangeTracker.Clear();
                 var investment = _context.FindInvestmentByName(investmentName);
                 if(investment == null) throw new Exception($"Investment with name {investment.Name} not found.");
+                investment.CalculateValue();
                 return investment;
             } catch
             {

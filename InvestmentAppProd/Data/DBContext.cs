@@ -7,11 +7,11 @@ using InvestmentAppProd.Models;
 
 namespace InvestmentAppProd.Data
 {
-    public class InvestmentDBContext : DbContext
+    public class DBContext : DbContext
     {
         public DbSet<Investment> Investments { get; set; }
 
-        public InvestmentDBContext(DbContextOptions<InvestmentDBContext> options) : base(options)
+        public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
 
         }
