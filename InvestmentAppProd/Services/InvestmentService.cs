@@ -8,83 +8,59 @@ using InvestmentAppProd.Models.DTO;
 namespace InvestmentAppProd.Services
 {
     public class InvestmentService : IInvestmentService
-	{
+    {
         private readonly DBContext _context;
+        private readonly IDBAccessService _dbAccess;
 
-        public InvestmentService(DBContext context)
-		{
+        public InvestmentService(DBContext context, IDBAccessService dbAccess)
+        {
             _context = context;
-		}
+            _dbAccess = dbAccess;
+        }
 
         public Investment AddNewInvestment(IInvestmentDTO investment)
         {
 
             if (investment.StartDate > DateTime.Now)
-                throw new Exception("Investment Start Date cannot be in the future.");
+                throw new ArgumentException("Investment Start Date cannot be in the future.");
 
-            var existedInvestment = _context.FindInvestmentByName(investment.Name);
+            var existedInvestment = _dbAccess.FindInvestmentByName(investment.Name);
             if (existedInvestment != null)
-                throw new Exception($"Investment with name {investment.Name} is unavaliable.");
+                throw new ArgumentException($"Investment with name {investment.Name} is unavaliable.");
 
-            try
-            {
-                var newInvestment = new Investment(investment);
-                _context.ChangeTracker.Clear();
-                _context.AddInvestment(newInvestment);
-                _context.SaveChanges();
-                return newInvestment;
-            } catch
-            { 
-                throw new NotImplementedException();
-            }
+            var newInvestment = new Investment(investment);
+            _dbAccess.AddInvestment(newInvestment);
+            _dbAccess.SaveChanges();
+            return newInvestment;
         }
 
         public void RemoveInvestment(string investmentName)
         {
-            try
-            {
-                _context.ChangeTracker.Clear();
-                _context.DeleteInvestmentByName(investmentName);
-                _context.SaveChanges();
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
+            _dbAccess.DeleteInvestmentByName(investmentName);
+            _dbAccess.SaveChanges();
         }
 
         public Investment UpdateInvestment(IInvestmentDTO investment)
         {
             if (investment.StartDate > DateTime.Now)
-                throw new Exception("Investment Start Date cannot be in the future.");
+                throw new ArgumentException("Investment Start Date cannot be in the future.");
+            var existedInvestment = _dbAccess.FindInvestmentByName(investment.Name);
+            if (existedInvestment != null)
+                throw new ArgumentException($"Investment with name {investment.Name} not found.");
 
-            try
-            {
-                var updatedInvestment = new Investment(investment);
-                _context.ChangeTracker.Clear();
-                _context.UpdateInvestment(updatedInvestment);
-                _context.SaveChanges();
-                return updatedInvestment;
-            }
-            catch
-            {
-                throw new NotImplementedException();
-            }
+            var updatedInvestment = new Investment(investment);
+            _dbAccess.UpdateInvestment(updatedInvestment);
+            _dbAccess.SaveChanges();
+            return updatedInvestment;
         }
 
         public Investment GetInvestment(string investmentName)
         {
-            try
-            {
-                _context.ChangeTracker.Clear();
-                var investment = _context.FindInvestmentByName(investmentName);
-                if(investment == null) throw new Exception($"Investment with name {investment.Name} not found.");
-                investment.CalculateValue();
-                return investment;
-            } catch
-            {
-                throw new NotImplementedException();
-            }
+            var investment = _dbAccess.FindInvestmentByName(investmentName);
+            if (investment == null)
+                throw new ArgumentException($"Investment with name {investment.Name} not found.");
+            investment.CalculateValue();
+            return investment;
         }
     }
 }

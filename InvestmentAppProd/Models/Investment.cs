@@ -77,11 +77,10 @@ namespace InvestmentAppProd.Models
 
 			// SIMPLE INTEREST.
 			simpleInterestFinalAmount = this.PrincipalAmount * (1 + (r * t));
+			InterestList.Add(Math.Round(simpleInterestFinalAmount, 2));
 
 			// COMPOUND INTEREST.
 			compoundInterestFinalAmount = this.PrincipalAmount * Math.Pow((1 + (r / n)), (n * t));
-
-			InterestList.Add(Math.Round(simpleInterestFinalAmount, 2));
 			InterestList.Add(Math.Round(compoundInterestFinalAmount, 2));
 
 			int InterestIndex = (int)this.InterestType;

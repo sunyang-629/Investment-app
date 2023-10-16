@@ -9,6 +9,7 @@ using InvestmentAppProd.Models;
 using InvestmentAppProd.Data;
 using InvestmentAppProd.Models.DTO;
 using InvestmentAppProd.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvestmentAppProd.Controllers
 {
@@ -23,23 +24,40 @@ namespace InvestmentAppProd.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Get details of an investment by its name
+        /// </summary>
+        /// <param name="investmentName">The unique name of the investment</param>
+        /// <returns>Returns an investment response containing the principal amount to the nearest month</returns>
+        /// <returns code="404>If given investment name was not found</returns>
+        /// <returns code="500>If there was an error while retrieving an investment</returns>
         [HttpGet("{investmentName}")]
-        public ActionResult<Investment> CalculateInvestment([FromRoute] string investmentName)
+        public ActionResult<Investment> CalculateInvestment([FromRoute, Required] string investmentName)
         {
             try
             {
                 var result = _service.GetInvestment(investmentName);
                 return Ok(result);
             }
+            catch (InvalidOperationException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e.Message);
+            }
             catch (Exception e)
             {
-                return NotFound(e.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
-
+        /// <summary>
+        /// Add a new investment
+        /// </summary>
+        /// <param name="investment">A investment request with all the new values</param>
+        /// <returns>Returns an investment response</returns>
+        /// <returns code="400">If given start time is after today or investment name has been existed</returns>
+        /// <returns code="500>If there was an error while adding an investment</returns>
         [HttpPost]
-        public ActionResult<Investment> AddInvestment([FromBody] IInvestmentDTO investment)
+        public ActionResult<Investment> AddInvestment([FromBody, Required] IInvestmentDTO investment)
         {
             try
             {
@@ -50,14 +68,26 @@ namespace InvestmentAppProd.Controllers
             {
                 return Conflict(dbE.ToString());
             }
+            catch(ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
             catch (Exception e)
             {
-                return BadRequest(e.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
+        /// <summary>
+        /// Update an investment
+        /// </summary>
+        /// <param name="investmentName">The unique name of the investment</param>
+        /// <param name="investment">A investment request containing the values to update</param>
+        /// <returns>Returns an investment response</returns>
+        /// <returns code="400">If given start time is after today or investment name has been existed, or investment name are not matched</returns>
+        /// <returns code="500>If there was an error while updating an investment</returns>
         [HttpPut("{investmentName}")]
-        public ActionResult UpdateInvestment([FromRoute] string investmentName, [FromBody] IInvestmentDTO investment)
+        public ActionResult UpdateInvestment([FromRoute,Required] string investmentName, [FromBody,Required] IInvestmentDTO investment)
         {
             try
             {
@@ -68,14 +98,25 @@ namespace InvestmentAppProd.Controllers
 
                 return Ok(result);
             }
+            catch (ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, e.Message);
+            }
             catch (Exception e)
             {
-                return BadRequest(e.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
+
+        /// <summary>
+        /// Delete an investment
+        /// </summary>
+        /// <param name="investmentName">The unique name of the investment</param>
+        /// <returns>Returns no content</returns>
+        /// <returns code="500>If there was an error while updating an investment</returns>
         [HttpDelete("{investmentName}")]
-        public ActionResult DeleteInvestment([FromRoute] string investmentName)
+        public ActionResult DeleteInvestment([FromRoute, Required] string investmentName)
         {
             try
             {
@@ -84,7 +125,7 @@ namespace InvestmentAppProd.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.ToString());
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
 
         }

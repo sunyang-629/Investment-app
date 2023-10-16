@@ -23,7 +23,6 @@ namespace InvestmentAppProd.Models.DTO
         public DateTime StartDate { get; set; }
 
         [Required]
-        [EnumDataType(typeof(InvestmentInterestTypeEnum))]
         public InvestmentInterestTypeEnum InterestType { get; set; }
 
         [Required]
@@ -32,6 +31,4 @@ namespace InvestmentAppProd.Models.DTO
         [Required]
         public double PrincipalAmount { get; set; }
     }
-
-
 }
