@@ -28,11 +28,11 @@ namespace InvestmentAppProd.Controllers
         /// Get details of an investment by its name
         /// </summary>
         /// <param name="investmentName">The unique name of the investment</param>
-        /// <returns>Returns an investment response containing the principal amount to the nearest month</returns>
+        /// <returns>Returns an investment response containing the current value to the nearest month</returns>
         /// <returns code="404>If given investment name was not found</returns>
         /// <returns code="500>If there was an error while retrieving an investment</returns>
         [HttpGet("{investmentName}")]
-        public ActionResult<Investment> CalculateInvestment([FromRoute, Required] string investmentName)
+        public ActionResult<InvestmentResponseDTO> CalculateInvestment([FromRoute, Required] string investmentName)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace InvestmentAppProd.Controllers
         /// <returns code="400">If given start time is after today or investment name has been existed</returns>
         /// <returns code="500>If there was an error while adding an investment</returns>
         [HttpPost]
-        public ActionResult<Investment> AddInvestment([FromBody, Required] IInvestmentDTO investment)
+        public ActionResult<Investment> AddInvestment([FromBody, Required] InvestmentDTO investment)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace InvestmentAppProd.Controllers
         /// <returns code="400">If given start time is after today or investment name has been existed, or investment name are not matched</returns>
         /// <returns code="500>If there was an error while updating an investment</returns>
         [HttpPut("{investmentName}")]
-        public ActionResult UpdateInvestment([FromRoute,Required] string investmentName, [FromBody,Required] IInvestmentDTO investment)
+        public ActionResult<Investment> UpdateInvestment([FromRoute,Required] string investmentName, [FromBody,Required] InvestmentDTO investment)
         {
             try
             {

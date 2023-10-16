@@ -17,7 +17,7 @@ public class CustomWebApplicationFactory<TProgram>
         {
             var dbContextDescriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
-                     typeof(DbContextOptions<InvestmentDBContext>));
+                     typeof(DbContextOptions<DBContext>));
 
             services.Remove(dbContextDescriptor);
 
@@ -27,7 +27,7 @@ public class CustomWebApplicationFactory<TProgram>
 
             services.Remove(dbConnectionDescriptor);
 
-            services.AddDbContext<InvestmentDBContext>(options => options.UseInMemoryDatabase("InvestmentsTest"));
+            services.AddDbContext<DBContext>(options => options.UseInMemoryDatabase("InvestmentsTest"));
             
         });
 

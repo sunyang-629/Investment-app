@@ -7,9 +7,9 @@ namespace InvestmentAppProd.Interfaces
 {
 	public interface IInvestmentService
 	{
-		public Investment AddNewInvestment(IInvestmentDTO investment);
+		public Investment AddNewInvestment(InvestmentDTO investment);
 		public void RemoveInvestment(string investmentName);
-		public Investment UpdateInvestment(IInvestmentDTO investment);
-		public Investment GetInvestment(string investmentName);
+		public Investment UpdateInvestment(InvestmentDTO investment);
+		public InvestmentResponseDTO GetInvestment(string investmentName);
 	}
 }

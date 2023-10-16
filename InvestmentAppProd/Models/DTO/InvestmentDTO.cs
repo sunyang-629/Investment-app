@@ -8,9 +8,9 @@ using static InvestmentAppProd.Models.Investment;
 
 namespace InvestmentAppProd.Models.DTO
 {
-    public class IInvestmentDTO
+    public class InvestmentDTO
     {
-        public IInvestmentDTO()
+        public InvestmentDTO()
         {
 
         }

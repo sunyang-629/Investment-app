@@ -7,6 +7,8 @@ using InvestmentAppProd.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using static InvestmentAppProd.Models.Investment;
+using InvestmentAppProd.Models.DTO;
 
 namespace InvestmentAppProd.Tests
 {
@@ -38,7 +40,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 1",
                     StartDate = DateTime.Parse("2022-03-01"),
-                    InterestType = "Simple",
+                    InterestType = InvestmentInterestTypeEnum.Simple,
                     InterestRate = 3.875,
                     PrincipalAmount = 10000
                 });
@@ -47,7 +49,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 2",
                     StartDate = DateTime.Parse("2022-04-01"),
-                    InterestType = "Simple",
+                    InterestType = InvestmentInterestTypeEnum.Simple,
                     InterestRate = 4,
                     PrincipalAmount = 15000
                 });
@@ -56,7 +58,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 3",
                     StartDate = DateTime.Parse("2022-05-01"),
-                    InterestType = "Compound",
+                    InterestType = InvestmentInterestTypeEnum.Compound,
                     InterestRate = 5,
                     PrincipalAmount = 20000
                 });
@@ -84,11 +86,11 @@ namespace InvestmentAppProd.Tests
             // Act
             var result = _controller.CalculateInvestment(name);
             var obj = result.Result as ObjectResult;
-            var objInvResult = obj.Value as Investment;
+            var objInvResult = obj.Value as InvestmentResponseDTO;
 
             // Assert   : Status code 200 ("Ok") + Object returned is of Type Investment + Object name is same.
             Assert.Equal(200, (obj.StatusCode));
-            Assert.IsType<Investment>(objInvResult);
+            Assert.IsType<InvestmentResponseDTO>(objInvResult);
             Assert.Equal(name, objInvResult.Name);
         }
 
@@ -96,11 +98,11 @@ namespace InvestmentAppProd.Tests
         public void AddInvestment_SingleItem_ShouldAddInvestment()
         {
             // Arrange
-            var newInvestnment = new Investment
+            var newInvestnment = new InvestmentDTO
             {
                 Name = "Investment 4",
                 StartDate = DateTime.Parse("2022-05-01"),
-                InterestType = "Simple",
+                InterestType = InvestmentInterestTypeEnum.Simple,
                 InterestRate = 7.7,
                 PrincipalAmount = 25000
             };
@@ -119,21 +121,21 @@ namespace InvestmentAppProd.Tests
         {
             // Arrange
             var updateInvestment = "Investment 2";
-            var newInvestment = new Investment
+            var newInvestment = new InvestmentDTO
             {
                 Name = "Investment 2",
                 StartDate = DateTime.Parse("2022-06-01"),
-                InterestType = "Compound",
+                InterestType = InvestmentInterestTypeEnum.Compound,
                 InterestRate = 8,
                 PrincipalAmount = 30000
             };
 
             // Act
             var result = _controller.UpdateInvestment(updateInvestment, newInvestment);
-            var obj = result as NoContentResult;
+            var obj = result.Result as ObjectResult;
 
             // Assert   : Status code 204 ("No Content")
-            Assert.Equal(204, obj.StatusCode);
+            Assert.Equal(200, obj.StatusCode);
         }
 
         [Fact]

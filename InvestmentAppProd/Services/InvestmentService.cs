@@ -18,7 +18,7 @@ namespace InvestmentAppProd.Services
             _dbAccess = dbAccess;
         }
 
-        public Investment AddNewInvestment(IInvestmentDTO investment)
+        public Investment AddNewInvestment(InvestmentDTO investment)
         {
 
             if (investment.StartDate > DateTime.Now)
@@ -40,12 +40,12 @@ namespace InvestmentAppProd.Services
             _dbAccess.SaveChanges();
         }
 
-        public Investment UpdateInvestment(IInvestmentDTO investment)
+        public Investment UpdateInvestment(InvestmentDTO investment)
         {
             if (investment.StartDate > DateTime.Now)
                 throw new ArgumentException("Investment Start Date cannot be in the future.");
             var existedInvestment = _dbAccess.FindInvestmentByName(investment.Name);
-            if (existedInvestment != null)
+            if (existedInvestment == null)
                 throw new ArgumentException($"Investment with name {investment.Name} not found.");
 
             var updatedInvestment = new Investment(investment);
@@ -54,11 +54,12 @@ namespace InvestmentAppProd.Services
             return updatedInvestment;
         }
 
-        public Investment GetInvestment(string investmentName)
+        public InvestmentResponseDTO GetInvestment(string investmentName)
         {
-            var investment = _dbAccess.FindInvestmentByName(investmentName);
-            if (investment == null)
-                throw new ArgumentException($"Investment with name {investment.Name} not found.");
+            var result = _dbAccess.FindInvestmentByName(investmentName);
+            if (result == null)
+                throw new ArgumentException($"Investment with name {investmentName} not found.");
+            var investment = new InvestmentResponseDTO(result);
             investment.CalculateValue();
             return investment;
         }
