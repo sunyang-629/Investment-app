@@ -40,7 +40,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 1",
                     StartDate = DateTime.Parse("2022-03-01"),
-                    InterestType = InvestmentInterestTypeEnum.Simple,
+                    InterestTypeId = (int)InvestmentInterestTypeEnum.Simple,
                     InterestRate = 3.875,
                     PrincipalAmount = 10000
                 });
@@ -49,7 +49,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 2",
                     StartDate = DateTime.Parse("2022-04-01"),
-                    InterestType = InvestmentInterestTypeEnum.Simple,
+                    InterestTypeId = (int)InvestmentInterestTypeEnum.Simple,
                     InterestRate = 4,
                     PrincipalAmount = 15000
                 });
@@ -58,7 +58,7 @@ namespace InvestmentAppProd.Tests
                 {
                     Name = "Investment 3",
                     StartDate = DateTime.Parse("2022-05-01"),
-                    InterestType = InvestmentInterestTypeEnum.Compound,
+                    InterestTypeId = (int)InvestmentInterestTypeEnum.Compound,
                     InterestRate = 5,
                     PrincipalAmount = 20000
                 });

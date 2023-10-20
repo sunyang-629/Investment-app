@@ -31,7 +31,7 @@ namespace InvestmentAppProd.Models.DTO
         {
             Name = investment.Name;
             StartDate = investment.StartDate;
-            InterestType = investment.InterestType;
+            InterestType = ((InvestmentInterestTypeEnum)investment.InterestTypeId);
             InterestRate = investment.InterestRate;
             PrincipalAmount = investment.PrincipalAmount;
         }

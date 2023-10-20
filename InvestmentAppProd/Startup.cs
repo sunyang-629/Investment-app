@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using InvestmentAppProd.Data;
 using InvestmentAppProd.Interfaces;
 using InvestmentAppProd.Services;
+using System.Text.Json.Serialization;
 
 namespace InvestmentAppProd
 {
@@ -37,6 +38,10 @@ namespace InvestmentAppProd
             services.AddTransient<IInvestmentService, InvestmentService>();
 
             services.AddControllers().AddControllersAsServices();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "InvestmentAppProd", Version = "v1" });

@@ -18,7 +18,7 @@ namespace InvestmentAppProd.Models
 
 		public DateTime StartDate { get; set; }
 
-		public InvestmentInterestTypeEnum InterestType { get; set; }
+		public int InterestTypeId { get; set; }
 
 		public double InterestRate { get; set; }
 
@@ -38,7 +38,7 @@ namespace InvestmentAppProd.Models
 		{
 			Name = investment.Name;
 			StartDate = investment.StartDate;
-			InterestType = investment.InterestType;
+			InterestTypeId = (int)investment.InterestType;
 			InterestRate = investment.InterestRate;
 			PrincipalAmount = investment.PrincipalAmount;
 		}
