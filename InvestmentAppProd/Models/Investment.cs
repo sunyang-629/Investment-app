@@ -20,9 +20,9 @@ namespace InvestmentAppProd.Models
 
 		public int InterestTypeId { get; set; }
 
-		public double InterestRate { get; set; }
+		public decimal InterestRate { get; set; }
 
-		public double PrincipalAmount { get; set; }
+		public decimal PrincipalAmount { get; set; }
 
 		public Investment()
 		{
@@ -31,7 +31,8 @@ namespace InvestmentAppProd.Models
 		public enum InvestmentInterestTypeEnum
 		{
             Simple,
-            Compound
+            Compound,
+			Complex
 		}
 
 		public Investment(InvestmentDTO investment)

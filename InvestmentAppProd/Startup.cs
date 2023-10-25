@@ -36,6 +36,9 @@ namespace InvestmentAppProd
 
             services.AddTransient<IDBAccessService, DBAccessService>();
             services.AddTransient<IInvestmentService, InvestmentService>();
+            services.AddTransient<IThirdPartyService, ThirdPartyService>();
+
+
 
             services.AddControllers().AddControllersAsServices();
             services.AddControllers().AddJsonOptions(options =>

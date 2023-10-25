@@ -7,13 +7,13 @@ namespace InvestmentAppProd.Helpers
 		{
 		}
 
-		public static double GetRoundedMonthDiff (DateTime date)
+		public static decimal GetRoundedMonthDiff (DateTime date)
 		{
             double monthsDiff = 12 * (DateTime.Now.Year - date.Year) + DateTime.Now.Month - date.Month;
 			double averageDaysInMonth = 30.4167;
 			double daysOffset = Math.Round((DateTime.Now.Day - date.Day) / averageDaysInMonth);
 			monthsDiff += daysOffset;
-			return monthsDiff;
+			return (decimal)monthsDiff;
         }
 	}
 }
